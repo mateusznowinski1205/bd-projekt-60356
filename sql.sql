@@ -137,7 +137,7 @@ GROUP BY
     u.usr_surname
 having liczba_zamowien > 1;
 
--- 2. > **Lista 2 SQL**
+-- 3. > **Lista 3 SQL**
 
 -- Zadanie  1
 
