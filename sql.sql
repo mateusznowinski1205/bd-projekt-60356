@@ -34,20 +34,35 @@ order by ord_audit_cd ASC
 -- [ ] Zadanie 5
 
 
-select ord_audit_cd, pha_id, pha_name as pha, usr_login as login, usr_id 
-from pharmacy as p, `user` , `order`
-where `user`.usr_id = `order`.ord_usr_id 
-AND p.pha_id = `order`.ord_pha_id
-and usr_id = 10 
-and pha_id = 1 
-and ord_audit_cd like '%2025%';
+SELECT 
+    ord_audit_cd,
+    pha_id,
+    pha_name AS pha,
+    usr_login AS login,
+    usr_id
+FROM
+    pharmacy AS p,
+    `user`,
+    `order`
+WHERE
+    `user`.usr_id = `order`.ord_usr_id
+        AND p.pha_id = `order`.ord_pha_id
+        AND usr_id = 10
+        AND pha_id = 1
+        AND ord_audit_cd LIKE '%2025%';
 
 
 -- [ ] Zadanie 6 
 
-
-select usr_id, usr_enabled, usr_name, usr_surname, usr_phone, usr_audit_cd
-from `user`;
+SELECT 
+    usr_id,
+    usr_enabled,
+    usr_name,
+    usr_surname,
+    usr_phone,
+    usr_audit_cd
+FROM
+    `user`;
 
 -- 2. > **Lista 2 SQL**
 
@@ -121,3 +136,37 @@ GROUP BY
     u.usr_name, 
     u.usr_surname
 having liczba_zamowien > 1;
+
+-- 2. > **Lista 2 SQL**
+
+-- Zadanie  1
+
+SELECT 
+    *
+FROM
+    `user` AS u
+WHERE
+    EXISTS (SELECT 
+            1
+        FROM
+            `order` AS o
+        WHERE
+            o.ord_usr_id = u.usr_id);
+
+-- Zadanie 2 
+
+
+
+-- Zadanie 3 
+
+SELECT 
+    o.ori_id, o.ori_price, ord.ord_comment
+FROM
+    order_drug AS o
+        JOIN
+    `order` AS ord ON o.ori_ord_id = ord.ord_id
+WHERE
+    o.ori_price > (SELECT 
+            AVG(ori_price)
+        FROM
+            order_drug);
